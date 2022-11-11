@@ -1,12 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import DatePicker from './DatePicker'
+import DateView from './DateView'
+import { spacing } from '../../utils';
+import styled from 'styled-components';
 
+//给布局组件外面套一层父元素，用来控制日历组件的宽和高
+const PickerWrapper = styled.div`
+    width: 45rem;
+    height: 45rem;
+    padding: ${spacing.padding.normal};
+    border: 1px solid #ccc;
+    `;
 function InputDatePicker(props) {
   return (
-    <div>
-        <DatePicker calendar={{year: 2022, monthIndex: 11}} selectedDate={new Date(2022,11,5)}/>
-    </div>
+    <PickerWrapper>
+      <DateView />
+    </PickerWrapper>
   )
 }
 

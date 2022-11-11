@@ -30,6 +30,7 @@ const CalendarDay = styled(TertiaryButton)`
 //给tr设置行高
 const CalendarRow = styled.tr`
   height: 3.6rem;
+  text-align: center;
   `
 
 // 给表头添加样式
