@@ -5,7 +5,7 @@ import DatePicker from './DatePicker'
 function InputDatePicker(props) {
   return (
     <div>
-        <DatePicker />
+        <DatePicker calendar={{year: 2022, monthIndex: 11}} selectedDate={new Date(2022,11,5)}/>
     </div>
   )
 }

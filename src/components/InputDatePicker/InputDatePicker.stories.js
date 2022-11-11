@@ -6,4 +6,4 @@ export default {
     component: InputDatePicker,
 }
 
-export const Default = () => <InputDatePicker />
+export const example = () => <InputDatePicker />
