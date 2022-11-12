@@ -16,6 +16,8 @@ const ViewLayoutHeader = styled.div`
     justify-content: space-between;
     align-items: center;
     padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 `;
 //日历主体部分自适应高度
 const ViewLayoutBody = styled.div`

@@ -6,6 +6,7 @@ import { TertiaryButton } from '../Button';
 import styled, { css } from 'styled-components'
 import { spacing, defaultTheme } from '../../utils';
 import tint from 'polished/lib/color/tint';
+import selectedStyle from './minins';
 
 const CalendarDay = styled(TertiaryButton)`
   height: 2.4rem,
@@ -14,17 +15,14 @@ const CalendarDay = styled(TertiaryButton)`
   line-height: 2.4rem;
   border-radius: 50%;
   border: none;
-  ${props => props.isToday && css`
-    background-color: ${tint(0.9, defaultTheme.primaryColor)};
-    border: 1px solid ${defaultTheme.primaryColor};
-  `}
+  // ${props => props.isToday && css`
+  //   background-color: ${tint(0.9, defaultTheme.primaryColor)};
+  //   border: 1px solid ${defaultTheme.primaryColor};
+  // `}
   ${props => !props.isCurrentMonth && css`
     opacity: 0.5;
   `}
-  ${props => props.isSelected && css`
-    background-color: ${defaultTheme.primaryColor};
-    color: ${defaultTheme.textColorInverted};
-    `}
+  ${selectedStyle}
 `
 
 //给tr设置行高
@@ -70,7 +68,7 @@ function DatePicker(props) {
         {weeks.map((week, i) => (
           <CalendarRow key={i}>
             {week.map((day, j) => {
-              // 判断当前日期是否是今天
+              // 判断当前日期是否是今天 暂时没必要用
               const isToday = getDate(day) === getDate(new Date());
               // 当前日期是否在当前月份
               const isCurrentMonth = day.getMonth() === monthIndex;
