@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState, createRef, useEffect } from "react";
 import DateView from "./DateView";
 import { spacing } from "../../utils";
 import styled from "styled-components";
@@ -15,6 +14,8 @@ const PickerWrapper = styled.div`
 
 function Calendar(props) {
   const [isDateView, setDateView] = useState(true);
+  //当前日历组件ref
+  const calendarRef = createRef(null);
   //当前日期
   const now = new Date();
   //当前年份
@@ -29,9 +30,9 @@ function Calendar(props) {
     setCalendar({ ...calendar, month });
   };
   //当年份改变时，更新日历
-    const onYearChange = (year) => {
+  const onYearChange = (year) => {
     setCalendar({ ...calendar, year });
-    };
+  };
   //当点击年份时，切换到月份视图
   const onYearClick = () => {
     setDateView(false);
@@ -40,9 +41,17 @@ function Calendar(props) {
   const onMonthClick = () => {
     setDateView(true);
   };
+
+  //组件挂载和切换视图时，当前日历dom元素获取焦点，否则的话dom元素从文档中被移除，焦点会丢失
+  //但是实际上发现即使没有下面的代码，日历组件也不会丢失焦点，不知道为什么
+  useEffect(() => {
+    calendarRef.current.focus();
+  }, [isDateView]);
+
+  //tabIndex属性，用来设置元素是否可以聚焦 0表示可以聚焦
   return (
     <div>
-      <PickerWrapper>
+      <PickerWrapper tabIndex={0} ref={calendarRef}>
         {isDateView ? (
           <DateView
             calendar={calendar}

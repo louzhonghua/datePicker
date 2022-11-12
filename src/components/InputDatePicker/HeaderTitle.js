@@ -29,7 +29,7 @@ function HeaderTitle(props) {
   if (withYearPick) {
     return (
       <HeaderTitleLayout>
-        <MonthLabel>{monthText}</MonthLabel>
+        <MonthLabel><span onClick={onTitleClick}>{monthText}</span></MonthLabel>
         <DropdownButton title={yearText}>
           <YearPick selectedYear={year} onYearChange={onYearChange}/>
         </DropdownButton>
