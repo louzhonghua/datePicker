@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react'
-import PropTypes from 'prop-types'
-import { generateCalendarByWeek, buildDayNames } from './generator'
-import { getDate, isSameDay } from 'date-fns';
-import { TertiaryButton } from '../Button';
-import styled, { css } from 'styled-components'
-import { spacing, defaultTheme } from '../../utils';
-import tint from 'polished/lib/color/tint';
-import selectedStyle from './minins';
+import React, { useMemo } from "react";
+import PropTypes from "prop-types";
+import { generateCalendarByWeek, buildDayNames } from "./generator";
+import { getDate, isSameDay } from "date-fns";
+import { TertiaryButton } from "../Button";
+import styled, { css } from "styled-components";
+import { spacing, defaultTheme } from "../../utils";
+import tint from "polished/lib/color/tint";
+import selectedStyle from "./minins";
 
 const CalendarDay = styled(TertiaryButton)`
   height: 2.4rem,
@@ -15,26 +15,31 @@ const CalendarDay = styled(TertiaryButton)`
   line-height: 2.4rem;
   border-radius: 50%;
   border: none;
-  // ${props => props.isToday && css`
-  //   background-color: ${tint(0.9, defaultTheme.primaryColor)};
-  //   border: 1px solid ${defaultTheme.primaryColor};
-  // `}
-  ${props => !props.isCurrentMonth && css`
-    opacity: 0.5;
-  `}
   ${selectedStyle}
-`
+   ${(props) =>
+    props.isToday &&
+    css`
+         background-color: ${tint(0.9, defaultTheme.primaryColor)};
+         border: 1px solid ${defaultTheme.primaryColor};
+      
+    `}
+  ${(props) =>
+    !props.isCurrentMonth &&
+    css`
+      opacity: 0.5;
+    `}
+    `;
 
 //给tr设置行高
 const CalendarRow = styled.tr`
   height: 3.6rem;
   text-align: center;
-  `
+`;
 
 // 给表头添加样式
 const CalendarHeader = styled.tr`
   &:after {
-    content: '';
+    content: "";
     width: 100%;
     border-bottom: 1px solid #ccc;
     position: absolute;
@@ -44,24 +49,29 @@ const CalendarHeader = styled.tr`
   th {
     padding-bottom: ${spacing.padding.medium};
   }
-`
+`;
 
 // 给父元素设置相对定位
 const CalendarWrapper = styled.table`
   position: relative;
-`
+`;
 
 function DatePicker(props) {
-  const { calendar, selectedDate } = props;
+  const { calendar, selectedDate, onDateChange } = props;
   const { year, monthIndex } = calendar;
-  const weeks = useMemo(() => generateCalendarByWeek(year, monthIndex), [year, monthIndex]);
+  const weeks = useMemo(
+    () => generateCalendarByWeek(year, monthIndex),
+    [year, monthIndex]
+  );
   //将weeks按照六行七列的形式渲染出来
   const dayNames = buildDayNames(1);
   return (
     <CalendarWrapper>
       <thead>
         <CalendarHeader>
-          {dayNames.map((dayName, index) => (<th key={index}>{dayName}</th>))}
+          {dayNames.map((dayName, index) => (
+            <th key={index}>{dayName}</th>
+          ))}
         </CalendarHeader>
       </thead>
       <tbody>
@@ -76,17 +86,22 @@ function DatePicker(props) {
               const isSelected = isSameDay(day, selectedDate);
               return (
                 <td key={j}>
-                  <CalendarDay isToday={isToday} isCurrentMonth={isCurrentMonth} isSelected={isSelected}>
+                  <CalendarDay
+                    isToday={isToday}
+                    isCurrentMonth={isCurrentMonth}
+                    isSelected={isSelected}
+                    onClick={(e) => onDateChange(e, day)}
+                  >
                     {getDate(day)}
                   </CalendarDay>
                 </td>
-              )
+              );
             })}
           </CalendarRow>
         ))}
       </tbody>
     </CalendarWrapper>
-  )
+  );
 }
 
 DatePicker.propTypes = {
@@ -95,6 +110,7 @@ DatePicker.propTypes = {
     monthIndex: PropTypes.number,
   }),
   selectedDate: PropTypes.instanceOf(Date),
-}
+  onDateChange: PropTypes.func,
+};
 
-export default DatePicker
+export default DatePicker;

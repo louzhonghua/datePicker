@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Calendar from "./Calendar";
+import DateManage from "./DateManage";
 import FocusManage from "./FocusManage";
+import PropTypes from "prop-types";
+import Input from "./Input";
 
 function InputDatePicker(props) {
   //控制日历组件的显示和隐藏
@@ -23,14 +26,16 @@ function InputDatePicker(props) {
   };
   return (
     <FocusManage onFocus={onInputFocus} onBlur={onInputBlur}>
-      <input />
-      {
-        showPicker && <Calendar />
-      }
+      <DateManage onDateChange={props.onDateChange}>
+        <Input />
+        {showPicker && <Calendar />}
+      </DateManage>
     </FocusManage>
   );
 }
 
-InputDatePicker.propTypes = {};
+InputDatePicker.propTypes = {
+  onDateChange: PropTypes.func,
+};
 
 export default InputDatePicker;
