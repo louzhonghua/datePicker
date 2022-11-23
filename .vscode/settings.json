@@ -34,4 +34,7 @@
     "emmet.includeLanguages": {
       "javascript": "javascriptreact"
     },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
   }
